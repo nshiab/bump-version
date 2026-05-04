@@ -1,0 +1,10 @@
+{
+  "name": "@nshiab/bump-version",
+  "version": "0.1.1",
+  "exports": "./main.ts",
+  "tasks": {
+    "patch": "deno run -A main.ts patch",
+    "minor": "deno run -A main.ts minor",
+    "major": "deno run -A main.ts major"
+  }
+}
