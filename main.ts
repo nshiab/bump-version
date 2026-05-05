@@ -24,11 +24,10 @@ export function bumpVersion(incrementType: string) {
     );
   }
 
-  // 2. Read both configuration files strictly
+  // 2. Read configuration file strictly
   const denoJsonPath = "deno.json";
-  const packageJsonPath = "package.json";
 
-  let denoData, packageData;
+  let denoData;
 
   try {
     denoData = JSON.parse(readFileSync(denoJsonPath, "utf-8"));
@@ -36,12 +35,6 @@ export function bumpVersion(incrementType: string) {
     throw new Error(
       `Could not read ${denoJsonPath}. This is required for JSR.`,
     );
-  }
-
-  try {
-    packageData = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
-  } catch (_e) {
-    console.log(`${packageJsonPath} not found, skipping.`);
   }
 
   if (!denoData.version) throw new Error("No version found in deno.json");
@@ -74,17 +67,11 @@ export function bumpVersion(incrementType: string) {
 
   const newVersion = versionParts.join(".");
 
-  // 4. Apply the new version to both files
+  // 4. Apply the new version
   denoData.version = newVersion;
   writeFileSync(denoJsonPath, JSON.stringify(denoData, null, 2) + "\n");
 
-  if (packageData) {
-    packageData.version = newVersion;
-    writeFileSync(packageJsonPath, JSON.stringify(packageData, null, 2) + "\n");
-    console.log(`Updated deno.json and package.json to version ${newVersion}`);
-  } else {
-    console.log(`Updated deno.json to version ${newVersion}`);
-  }
+  console.log(`Updated deno.json to version ${newVersion}`);
 
   // 5. Format, commit, push, and tag
   try {

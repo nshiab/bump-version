@@ -1,6 +1,6 @@
 # bump-version
 
-A simple script to bump versions in `deno.json` and optionally `package.json`.
+A simple script to bump versions in `deno.json`.
 
 ## Maintenance
 
